@@ -650,9 +650,9 @@ int main(int argc, char *argv[])
                     // Help
                     case 'h':
                     case '?':
-                    default:
                         usage();
                         break;
+					default: ;
                 }
                 if (added)
                 {
