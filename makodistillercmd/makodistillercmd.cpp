@@ -1,6 +1,6 @@
 //
 // makodistillercmd.cpp
-// Copyright (C) 2020 Global Graphics Software Ltd. All rights reserved
+// Copyright (C) 2021 Global Graphics Software Ltd. All rights reserved
 //
 // Simple example application that uses IDistiller to distill PostScript
 // using options set from an argument file, where all supported options
@@ -17,8 +17,6 @@
 #endif
 
 #include <exception>
-#include <stdexcept>
-#include <wctype.h>
 #include <iostream>
 #include <map>
 #include <filesystem>
@@ -39,7 +37,7 @@ typedef std::map<U8String, DistillerParam> ParamMap;
 static void usage()
 {
     std::wcout << L"================================================================" << std::endl;
-    std::wcout << L"(C) Copyright 2020 Global Graphics Software Ltd." << std::endl;
+    std::wcout << L"(C) Copyright 2021 Global Graphics Software Ltd." << std::endl;
     std::wcout << L"All Rights Reserved." << std::endl;
     std::wcout << L"================================================================" << std::endl;
     std::wcout << std::endl;
@@ -531,7 +529,7 @@ int main(int argc, char *argv[])
         }
 
         // Create IJawsMako instance
-        IJawsMakoPtr jawsMako = IJawsMako::create(".");
+        IJawsMakoPtr jawsMako = IJawsMako::create();
 
         // Create a progress monitor
         uint32              progress = 0;
@@ -539,7 +537,7 @@ int main(int argc, char *argv[])
         IProgressTickPtr    progressTick = IProgressTick::create((IProgressTick::FloatProgressCallbackFunc) progressFunc, &progress);
         IProgressMonitorPtr progressMonitor = IProgressMonitor::create(progressTick, abort);
 
-        // Simple options and their IDistiller equivelents
+        // Simple options and their IDistiller equivalents
         ParamMap paramMap;
         paramMap["dcA"] = DistillerParam("colorimagecompression", "auto");
         paramMap["dcd"] = DistillerParam("colorimagecompression", "dct");
@@ -652,6 +650,7 @@ int main(int argc, char *argv[])
                     // Help
                     case 'h':
                     case '?':
+                    default:
                         usage();
                         break;
                 }
